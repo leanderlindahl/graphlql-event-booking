@@ -1,0 +1,8 @@
+{
+  "env": {
+    "MONGO_USER": "username",
+    "MONGO_PASSWORD": "password",
+    "MONGO_DB": "db-name",
+    "MONGO_CLUSTER": "cluster0-example.azure.mongodb.net"
+  }
+}
