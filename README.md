@@ -4,4 +4,6 @@ Event booking app built with GraphQL, MongoDB and React.
 
 ## Installation
 
-`npm install`
+1. `npm install`
+2. Rename `nodemon.exmple.json` to `nodemon.json` and populate the variables with your connection
+3. run `npm start` to launch application on localhost:3001
