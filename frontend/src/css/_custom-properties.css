@@ -1,0 +1,12 @@
+/**
+ * Custom Properties
+ * aka CSS variables.
+ *
+ * @link: https://developer.mozilla.org/en-US/docs/Web/CSS/--*
+ **/
+
+:root {
+  /* Custom colors */
+  --color-primary: #28cdaa;
+  --color-primary-hover: #39e0bc;
+}

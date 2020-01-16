@@ -1,3 +1,4 @@
+@import './css/_custom-properties.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 body {
@@ -6,4 +7,34 @@ body {
 
 .main-content {
   margin: 4rem 2.5rem;
+}
+
+.button {
+  background-color: var(--color-primary);
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  display: inline-block;
+  min-height: 44px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #fff;
+  transition: background-color ease-in-out 0.1s 0s;
+  margin-right: 10px;
+}
+
+.button:hover,
+.button:active {
+  background-color: var(--color-primary-hover);
+}
+
+.button-primary {
+  background-color: var(--color-primary);
 }

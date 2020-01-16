@@ -1,3 +1,5 @@
+@import './../../css/_custom-properties.css';
+
 .main-navigation {
   position: fixed;
   left: 0;
@@ -29,6 +31,8 @@
 
 .main-navigation__items li {
   margin: 0 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .main-navigation__items a {
@@ -36,7 +40,6 @@
   color: #fff;
 }
 .main-navigation__items a:hover,
-.main-navigation__items a:active,
-.main-navigation__items a.active {
+.main-navigation__items a:active {
   color: lightgrey;
 }

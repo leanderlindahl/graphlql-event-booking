@@ -1,3 +1,5 @@
+@import '../css/_custom-properties.css';
+
 .auth-form {
   width: 25rem;
   max-width: 80%;
@@ -24,30 +26,4 @@
   border: solid 1px #e1e5e8;
   border-radius: 4px;
   font-size: 1rem;
-}
-
-.form-actions button {
-  background-color: #28cdaa;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px;
-  padding: 0.5rem 1rem;
-  font: inherit;
-  display: inline-block;
-  min-height: 44px;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  text-align: center;
-  white-space: nowrap;
-  font-weight: 600;
-  color: #fff;
-  transition: background-color ease-in-out 0.1s 0s;
-  margin-right: 10px;
-}
-
-.form-actions button:hover,
-.form-actions button:active {
-  background-color: #39e0bc;
 }
