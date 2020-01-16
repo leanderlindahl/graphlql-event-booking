@@ -11,7 +11,7 @@ const mainNavigation = props => (
       return (
         <header className="main-navigation">
           <div className="main-navigation__logo">
-            <h1>GraphQL Event Booking</h1>
+            <h1>Eventify</h1>
           </div>
           <nav className="main-navigation__items">
             <ul>
