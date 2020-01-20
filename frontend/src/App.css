@@ -32,6 +32,8 @@ body {
 
 .form-control textarea {
   width: 100%;
+  font-size: inherit;
+  font: inherit;
 }
 
 .button {
