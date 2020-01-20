@@ -11,7 +11,7 @@ body {
 
 .form-control label,
 .form-control input {
-  width: 100%;
+  width: calc(100% - 1.5rem);
   display: block;
 }
 
@@ -22,13 +22,16 @@ body {
 .form-control input {
   margin-bottom: 1rem;
   padding: 0rem 0.75rem;
-  width: 100%;
   min-height: 2.75rem;
   line-height: 1.4285;
   background-color: #fafbfc;
   border: solid 1px #e1e5e8;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+.form-control textarea {
+  width: 100%;
 }
 
 .button {
