@@ -3,13 +3,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import Modal from '../components/Modal/Modal';
 import Backdrop from '../components/Backdrop/Backdrop';
 import AuthContext from '../context/auth-context';
+import EventList from '../components/Events/EventList/EventList';
+import Spinner from '../components/Spinner/Spinner';
+
 import './Events.css';
 
 const EventsPage = () => {
   const context = useContext(AuthContext);
   const [events, setEvents] = useState([]);
-
   const [creating, setCreating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const titleElRef = React.createRef();
   const priceElRef = React.createRef();
@@ -17,6 +21,7 @@ const EventsPage = () => {
   const descriptionElRef = React.createRef();
 
   const fetchEvents = () => {
+    setIsLoading(true);
     const requestBody = {
       query: `
           query {
@@ -49,12 +54,14 @@ const EventsPage = () => {
         return res.json();
       })
       .then(resData => {
-        console.log(resData);
         const retrievedEvents = resData.data.events;
         setEvents(retrievedEvents);
+        setIsLoading(false);
       })
       .catch(err => {
+        // eslint-disable-next-line no-console
         console.log(err);
+        setIsLoading(false);
       });
   };
 
@@ -100,10 +107,6 @@ const EventsPage = () => {
               description
               price
               date
-              creator {
-                _id
-                email
-              }
             }
           }
         `
@@ -124,25 +127,43 @@ const EventsPage = () => {
         return res.json();
       })
       .then(resData => {
-        console.log(resData);
-        fetchEvents();
+        const updatedEvents = [...events];
+        updatedEvents.push({
+          _id: resData.data.createEvent._id,
+          title: resData.data.createEvent.title,
+          description: resData.data.createEvent.description,
+          date: resData.data.createEvent.date,
+          price: resData.data.createEvent.price,
+          creator: {
+            _id: context.userId,
+            email: context.email
+          }
+        });
+        setEvents(updatedEvents);
       })
       .catch(err => {
         console.log(err);
       });
   };
+
   const modalCancelHandler = () => {
     setCreating(false);
+    setSelectedEvent(null);
   };
 
-  const eventsList = events.map(event => (
-    <li key={event._id} className="events__list-item">
-      {event.title}
-    </li>
-  ));
+  const bookEventHandler = () => {
+    console.log('clicked book event');
+  };
+
+  const showDetailHandler = eventId => {
+    const theEvent = events.find(event => event._id === eventId);
+    setSelectedEvent(theEvent);
+    console.log('selectedEvent', selectedEvent);
+  };
+
   return (
     <>
-      {creating && <Backdrop />}
+      {creating || (selectedEvent && <Backdrop />)}
       {creating && (
         <Modal
           title="Add Event"
@@ -181,7 +202,23 @@ const EventsPage = () => {
           </form>
         </Modal>
       )}
-
+      {selectedEvent && (
+        <Modal
+          title={selectedEvent.title}
+          canCancel
+          canConfirm
+          onCancel={modalCancelHandler}
+          onConfirm={bookEventHandler}
+          confirmText="Book event"
+        >
+          <h1>{selectedEvent.title}</h1>
+          <h2>
+            SEK {selectedEvent.price} -{' Date: '}
+            {new Date(selectedEvent.date).toLocaleDateString()}
+          </h2>
+          <p>{selectedEvent.description}</p>
+        </Modal>
+      )}
       <article className="events">
         <header>
           <h1>Share your own Events!</h1>
@@ -201,7 +238,15 @@ const EventsPage = () => {
             )}
           </section>
           <section>
-            <ul className="events__list">{eventsList}</ul>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <EventList
+                events={events}
+                authUserId={context.userId}
+                onViewDetail={showDetailHandler}
+              />
+            )}
           </section>
         </main>
       </article>

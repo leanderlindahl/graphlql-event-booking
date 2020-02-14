@@ -7,6 +7,7 @@
   position: fixed;
   top: 15vh;
   left: 5%;
+  z-index: 100;
 }
 
 .modal__header {

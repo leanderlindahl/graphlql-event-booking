@@ -5,7 +5,7 @@ import AuthContext from '../../context/auth-context';
 
 import './MainNavigation.css';
 
-const mainNavigation = props => (
+const mainNavigation = () => (
   <AuthContext.Consumer>
     {context => {
       return (
@@ -19,7 +19,7 @@ const mainNavigation = props => (
                 <NavLink to="/events">Events</NavLink>
               </li>
               {context.token && (
-                <React.Fragment>
+                <>
                   <li>
                     <NavLink to="/bookings">Bookings</NavLink>
                   </li>
@@ -27,11 +27,12 @@ const mainNavigation = props => (
                     <button
                       className="button button-primary"
                       onClick={context.logout}
+                      type="button"
                     >
                       Logout
                     </button>
                   </li>
-                </React.Fragment>
+                </>
               )}
               {!context.token && (
                 <li>
