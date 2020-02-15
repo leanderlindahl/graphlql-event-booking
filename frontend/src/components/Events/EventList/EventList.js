@@ -3,7 +3,7 @@ import EventItem from './EventItem/EventItem';
 
 import './EventList.css';
 
-const eventList = ({ events, authUserId, onViewDetail }) => {
+const eventList = ({ events, authUserId, onViewDetail, onDelete }) => {
   return (
     <ul className="event__list">
       {events.map(event => (
@@ -16,6 +16,7 @@ const eventList = ({ events, authUserId, onViewDetail }) => {
           creatorId={event.creator._id}
           userId={authUserId}
           onDetail={onViewDetail}
+          onDelete={onDelete}
         />
       ))}
     </ul>

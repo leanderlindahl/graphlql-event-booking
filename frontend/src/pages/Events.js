@@ -152,13 +152,82 @@ const EventsPage = () => {
   };
 
   const bookEventHandler = () => {
-    console.log('clicked book event');
+    const requestBody = {
+      query: `
+          mutation {
+            bookEvent(eventId:"${selectedEvent._id}") {
+              _id
+              createdAt
+              updatedAt
+            }
+          }
+        `
+    };
+
+    fetch('http://localhost:8001/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${context.token}`
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Book event failed2!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        console.log('Bookevent', resData);
+        setSelectedEvent(null);
+      })
+      .catch(err => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      });
   };
 
   const showDetailHandler = eventId => {
     const theEvent = events.find(event => event._id === eventId);
     setSelectedEvent(theEvent);
     console.log('selectedEvent', selectedEvent);
+  };
+
+  const onDeleteHandler = eventId => {
+    const theEvent = events.find(event => event._id === eventId);
+    const requestBody = {
+      query: `
+          mutation {
+            deleteEvent(eventId: "${eventId}") {
+              _id
+              title
+            }
+          }
+        `
+    };
+    fetch('http://localhost:8001/graphql', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${context.token}`
+      }
+    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw new Error('Delete event failed!');
+        }
+        return res.json();
+      })
+      .then(resData => {
+        // @todo: remove the event from the EventList
+        console.log(resData);
+      })
+      .catch(err => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      });
   };
 
   return (
@@ -206,7 +275,7 @@ const EventsPage = () => {
         <Modal
           title={selectedEvent.title}
           canCancel
-          canConfirm
+          canConfirm={context.token}
           onCancel={modalCancelHandler}
           onConfirm={bookEventHandler}
           confirmText="Book event"
@@ -245,6 +314,7 @@ const EventsPage = () => {
                 events={events}
                 authUserId={context.userId}
                 onViewDetail={showDetailHandler}
+                onDelete={onDeleteHandler}
               />
             )}
           </section>

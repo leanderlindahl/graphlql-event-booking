@@ -1,5 +1,6 @@
 import React from 'react';
 import './EventItem.css';
+import eventList from '../EventList';
 
 const eventItem = ({
   eventId,
@@ -8,7 +9,8 @@ const eventItem = ({
   date,
   creatorId,
   userId,
-  onDetail
+  onDetail,
+  onDelete
 }) => (
   <li className="event__list-item">
     <div>
@@ -19,7 +21,15 @@ const eventItem = ({
     </div>
     <div>
       {userId === creatorId ? (
-        <p>You&#39;re the owner of this event</p>
+        <div>
+          <p>You&#39;re the owner of this eventList</p>
+          <button type="button" onClick={() => onDelete(eventId)}>
+            Delete
+          </button>
+          <button type="button" onClick={() => onDetail(eventId)}>
+            View Details
+          </button>
+        </div>
       ) : (
         <button
           className="button"
